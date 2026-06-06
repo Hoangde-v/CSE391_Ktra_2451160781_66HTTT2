@@ -1,0 +1,38 @@
+[
+  {
+    "borrowId":     "PM-1001",
+    "borrowerName": "Nguyễn Văn An",
+    "bookId":       "BK10001",
+    "category":     "CNTT",
+    "borrowDate":   "2025-05-01",
+    "returnDate":   "2025-05-20",
+    "phone":        "0912345678",
+    "email":        "an@library.vn",
+    "status":       "Đã trả",
+    "note":         "Sách còn tốt"
+  },
+  {
+    "borrowId":     "PM-1002",
+    "borrowerName": "Trần Thị Bình",
+    "bookId":       "BK20045",
+    "category":     "Ngoại ngữ",
+    "borrowDate":   "2025-05-10",
+    "returnDate":   "2025-05-30",
+    "phone":        "0387654321",
+    "email":        "binh@library.vn",
+    "status":       "Đang mượn",
+    "note":         ""
+  },
+  {
+    "borrowId":     "PM-1003",
+    "borrowerName": "Lê Quốc Cường",
+    "bookId":       "BK30012",
+    "category":     "Kinh tế",
+    "borrowDate":   "2025-05-15",
+    "returnDate":   "2025-06-05",
+    "phone":        "0769988776",
+    "email":        "cuong@library.vn",
+    "status":       "Đang mượn",
+    "note":         "Đọc cho luận văn"
+  }
+]

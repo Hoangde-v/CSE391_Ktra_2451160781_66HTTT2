@@ -1,0 +1,275 @@
+/* =============================================
+   style.css – Giao diện quản lý phiếu mượn sách
+   Tác giả: CSE391 Demo
+   ============================================= */
+
+/* ---------- Biến màu sắc chung ---------- */
+:root {
+  --primary:      #44bb4e;   /* Xanh dương chính */
+  --primary-dark: #1341b0;
+  --success:      #057a55;   /* Xanh lá */
+  --warning:      #c27803;   /* Cam vàng */
+  --danger:       #c81e1e;   /* Đỏ */
+  --bg:           #f0f4f8;   /* Nền trang */
+  --surface:      #ffffff;   /* Nền card/bảng */
+  --border:       #d1d9e0;
+  --text:         #1e293b;
+  --text-muted:   #64748b;
+  --header-bg:    #1a56db;
+  --header-text:  #ffffff;
+  --radius:       10px;
+}
+
+/* ---------- Reset & Font ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* ---------- HEADER ---------- */
+.app-header {
+  background: linear-gradient(135deg, var(--primary) 0%, #1a3d8f 100%);
+  color: var(--header-text);
+  padding: 18px 0;
+  box-shadow: 0 3px 10px rgba(26,86,219,.35);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-icon {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+}
+
+.app-header h1 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.app-header .subtitle {
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+/* ---------- STAT CARDS (Thống kê) ---------- */
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  border-left: 5px solid transparent;
+  transition: transform .2s, box-shadow .2s;
+}
+.stat-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+
+/* Màu viền trái khác nhau cho từng loại thẻ */
+.stat-total    { border-left-color: var(--primary); }
+.stat-borrowing{ border-left-color: var(--warning); }
+.stat-returned { border-left-color: var(--success); }
+
+.stat-icon {
+  font-size: 2rem;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.stat-total    .stat-icon { background: #e8f0fe; color: var(--primary); }
+.stat-borrowing .stat-icon { background: #fef3c7; color: var(--warning); }
+.stat-returned .stat-icon { background: #d1fae5; color: var(--success); }
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* ---------- THANH CÔNG CỤ (Table toolbar) ---------- */
+.table-toolbar {
+  background: var(--surface);
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+.table-toolbar h5 { color: var(--text); font-weight: 600; }
+
+/* Nút Thêm phiếu mượn */
+.btn-add {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  padding: 8px 18px;
+  font-weight: 600;
+  font-size: .9rem;
+  transition: background .2s, transform .15s;
+}
+.btn-add:hover {
+  background: var(--primary-dark);
+  color: #fff;
+  transform: scale(1.03);
+}
+
+/* ---------- BẢNG DỮ LIỆU ---------- */
+.table-wrapper {
+  background: var(--surface);
+  border-radius: 0 0 var(--radius) var(--radius);
+  overflow-x: auto;       /* Cho phép cuộn ngang trên màn hình nhỏ */
+  box-shadow: 0 2px 8px rgba(0,0,0,.07);
+}
+
+/* Header của bảng */
+#borrow-table thead th {
+  background: #f8fafc;
+  color: var(--text-muted);
+  font-size: .78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+  padding: 12px 14px;
+}
+
+/* Các ô dữ liệu */
+#borrow-table tbody td {
+  font-size: .88rem;
+  padding: 11px 14px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+/* Zebra striping nhẹ */
+#borrow-table tbody tr:nth-child(even) { background: #fafcff; }
+#borrow-table tbody tr:hover { background: #eef4ff; }
+
+/* ---------- BADGE TRẠNG THÁI ---------- */
+.badge-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: .78rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.badge-borrowing {
+  background: #fef3c7;
+  color: #92400e;
+}
+.badge-returned {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+/* ---------- NÚT SỬA / XÓA ---------- */
+.btn-edit, .btn-delete {
+  border: none;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: .82rem;
+  font-weight: 600;
+  transition: background .15s, transform .1s;
+  cursor: pointer;
+}
+.btn-edit  { background: #e0f2fe; color: #0369a1; }
+.btn-edit:hover  { background: #bae6fd; transform: scale(1.05); }
+.btn-delete { background: #fee2e2; color: #b91c1c; }
+.btn-delete:hover { background: #fecaca; transform: scale(1.05); }
+
+/* ---------- EMPTY STATE ---------- */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state i { opacity: .4; }
+
+/* ---------- MODAL ---------- */
+.modal-header {
+  background: linear-gradient(135deg, var(--primary) 0%, #1a3d8f 100%);
+  color: #fff;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.modal-title { font-weight: 700; font-size: 1rem; }
+.modal-content { border-radius: var(--radius); border: none; }
+
+/* ---------- FORM LABELS ---------- */
+.form-label {
+  font-weight: 600;
+  font-size: .88rem;
+  margin-bottom: 4px;
+}
+
+/* Dấu * đỏ cho trường bắt buộc */
+.required-label::after {
+  content: ' *';
+  color: var(--danger);
+}
+
+.form-control, .form-select {
+  border-radius: 7px;
+  border: 1.5px solid var(--border);
+  font-size: .9rem;
+  padding: 9px 12px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(26,86,219,.15);
+  outline: none;
+}
+
+/* Khi trường có lỗi → viền đỏ */
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: var(--danger) !important;
+}
+
+/* ---------- THÔNG BÁO LỖI ---------- */
+.error-msg {
+  color: var(--danger);
+  font-size: .8rem;
+  min-height: 18px;     /* Giữ chỗ để layout không bị giật */
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Hiệu ứng rung nhẹ khi có lỗi (dùng trong JS) */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25%       { transform: translateX(-6px); }
+  75%       { transform: translateX(6px); }
+}
+.shake { animation: shake 0.35s ease; }
+
+/* ---------- MODAL FOOTER ---------- */
+.modal-footer { border-top: 1px solid var(--border); }
+
+/* ---------- SCROLLBAR (tuỳ chỉnh nhẹ cho bảng) ---------- */
+.table-wrapper::-webkit-scrollbar { height: 6px; }
+.table-wrapper::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+
+/* ---------- RESPONSIVE nhỏ ---------- */
+@media (max-width: 576px) {
+  .app-header h1 { font-size: 1.05rem; }
+  .stat-number   { font-size: 1.5rem; }
+}
